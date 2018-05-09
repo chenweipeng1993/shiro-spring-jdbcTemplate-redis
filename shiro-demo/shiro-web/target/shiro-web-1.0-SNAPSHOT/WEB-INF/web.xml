@@ -6,7 +6,7 @@
          version="3.1"
          metadata-complete="true">
 
-    <!-- 在Spring框架中是如何解决从页面传来的字符串的编码问题的呢？
+    <!-- 在Spring框架中是如何解决从页面传来的字符串的编码问题的呢？ post乱码 get乱码的话可以是在tomcat的conf/server.xml中uriEncoding=true
     下面我们来看看Spring框架给我们提供过滤器CharacterEncodingFilter
      这个过滤器就是针对于每次浏览器请求进行过滤的，然后再其之上添加了父类没有的功能即处理字符编码。
       其中encoding用来设置编码格式，forceEncoding用来设置是否理会 request.getCharacterEncoding()方法，设置为true则强制覆盖之前的编码格式。-->
@@ -74,7 +74,8 @@
             <!--2、<param-value>/WEB-INF/classes/dispatcher-servlet.xml</param-value>-->
             <!--3、<param-value>classpath*:dispatcher-servlet.xml</param-value>-->
             <!--4、多个值用逗号分隔-->
-            <param-value>classpath:spring/spring*.xml</param-value>
+            <!-- 配置springmvc的配置文件，主要是一些前端控制器，处理器映射器，处理器适配器，以及视图解析器-->
+            <param-value>classpath:spring/springmvc.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup><!--是启动顺序，让这个Servlet随Servletp容器一起启动。-->
     </servlet>
@@ -85,6 +86,7 @@
         <!--Servlet拦截匹配规则可以自已定义，当映射为@RequestMapping("/user/add")时，为例,拦截哪种URL合适？-->
         <!--1、拦截*.do、*.htm， 例如：/user/add.do,这是最传统的方式，最简单也最实用。不会导致静态文件（jpg,js,css）被拦截。-->
         <!--2、拦截/，例如：/user/add,可以实现现在很流行的REST风格。很多互联网类型的应用很喜欢这种风格的URL。弊端：会导致静态文件（jpg,js,css）被拦截后不能正常显示。 -->
+        <!--这个DispatcherServlet可以配置多个，一个可以用来支持.action结尾的，还有一个可以用来支持rest格式，不能是/* -->
         <url-pattern>/</url-pattern> <!--会拦截URL中带“/”的请求。-->
     </servlet-mapping>
 

@@ -14,20 +14,27 @@
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <!--定义shiro的过滤器-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!--设置SecurityManager对象-->
         <property name="securityManager" ref="securityManager"/>
+        <!--设置登录界面-->
         <property name="loginUrl" value="login.html"/>
+        <!--设置没有登录跳转的界面-->
         <property name="unauthorizedUrl" value="403.html"/>
         <property name="filterChainDefinitions">
             <value>
-                <!--不经过任何认证-->
+                <!--打开登录页面不经过任何认证-->
                 /login.html = anon
+                <!--登录时不需要认证的-->
                 /subLogin= anon
                 <!--需要认证，一般会把/*放在最下面-->
                 /* = authc
             </value>
         </property>
     </bean>
+
+    <!--下面的这一堆配置其实是CustomRealmTest的配置实现-->
     <!--创建SecurityManager对象-->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="realm"/>
@@ -38,7 +45,9 @@
     </bean>
     <!--设置加密凭证匹配器-->
     <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <!--用md5的加密方式-->
         <property name="hashAlgorithmName" value="md5"/>
+        <!--加密一次-->
         <property name="hashIterations" value="1"/>
     </bean>
 </beans>

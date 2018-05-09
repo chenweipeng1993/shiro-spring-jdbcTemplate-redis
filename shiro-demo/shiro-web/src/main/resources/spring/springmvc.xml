@@ -14,8 +14,19 @@
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <!--springmvc的配置扫描-->
     <context:component-scan base-package="com.peng.controller"/>
+
+    <!-- 注解的处理器映射器、处理器适配器要和@Controller注解和@RequestMapping注解一起使用-->
+
+    <!--springmvc的RequestMappingHandlerMapping、RequestMappingHandlerAdapter的注解驱动，等同下面两行-->
     <mvc:annotation-driven/>
-    <!--静态资源的访问-->
-    <mvc:resources mapping="/*" location="/"/>
+    <!--&lt;!&ndash;处理器映射器&ndash;&gt;
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+    &lt;!&ndash;处理器适配器&ndash;&gt;
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>-->
+
+    <!--静态资源的访问 目录下所有的资源以及子目录下的静态资源（js、css、img）都可以访问-->
+    <mvc:resources mapping="/**" location="/"/>
+
 </beans>

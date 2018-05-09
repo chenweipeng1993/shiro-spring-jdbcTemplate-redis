@@ -30,13 +30,21 @@ public class CustomRealm extends AuthorizingRealm {
         String userName = (String) principalCollection.getPrimaryPrincipal();
         //从数据库或者缓存中获取数据角色信息
         Set<String> roles = getRolesByUserName(userName);
+        //从数据库或者缓存中获取数据权限信息
         Set<String> permissions = getPermissionsByUserName(userName);
+
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         simpleAuthorizationInfo.setStringPermissions(permissions);
         simpleAuthorizationInfo.setRoles(roles);
+
         return simpleAuthorizationInfo;
     }
 
+    /**
+     * 模拟数据库或者缓存查询
+     * @param userName
+     * @return
+     */
     private Set<String> getPermissionsByUserName(String userName) {
         Set<String> permissions = new HashSet<String>();
         permissions.add("user:add");
@@ -44,6 +52,11 @@ public class CustomRealm extends AuthorizingRealm {
         return permissions;
     }
 
+    /**
+     * 模拟数据库或者缓存查询
+     * @param userName
+     * @return
+     */
     private Set<String> getRolesByUserName(String userName) {
         Set<String > roles = new HashSet<String>();
         roles.add("admin");
